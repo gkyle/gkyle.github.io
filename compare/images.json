@@ -1,0 +1,101 @@
+{
+    "meta": {
+        "basePath": "images/collections/compare1/",
+        "sources": [
+            { "name": "original", "path": "original", "tags": ["default"]},
+            { "name": "insects-realesrgan-sharpen-medium", "path": "gkyle/insects/Sharpen-Medium-RealESRGAN-v0.1.pth", "tags": ["insects", "default"]},
+
+            { "name": "insects-realesrgan-sharpen-light", "path": "gkyle/insects/Sharpen-Light-RealESRGAN-v0.1.pth", "tags": ["insects"]},
+            { "name": "insects-realesrgan-sharpen-strong", "path": "gkyle/insects/Sharpen-Strong-RealESRGAN-v0.1.pth", "tags": ["insects"]},
+            { "name": "insects-realplksr-sharpen-medium", "path": "gkyle/insects/Sharpen-Medium-RealPLKSR-v0.1.pth", "tags": ["insects"]},
+            { "name": "insects-realesrgan-upscale-x4-medium", "path": "gkyle/insects/Upscale-X4-Medium-RealESRGAN-v0.1.pth", "tags": ["insects"]},
+
+            { "name": "topaz-deblur-10-sharpen-standard-30", "path": "topaz-deblur-10-sharpen-standard-30", "tags": ["3P", "interesting"]},
+
+            { "name": "general-adacode-upscale-x2", "path": "kechunl/AdaCode/AdaCode_SR_X2_model_g.pth", "tags": ["general", "interesting"]},
+            { "name": "general-adacode-s2", "path": "kechunl/AdaCode/AdaCode_S2_model_g.pth", "tags": ["general","exhaustive"]},
+
+            { "name": "general-denoise-realplksr", "path": "Phhofm/models/1xDeNoise_realplksr_otf.safetensors", "tags": ["general","exhaustive"]},
+            { "name": "general-nature-realplksr-upscale-x4", "path": "Phhofm/models/4xNature_realplksr_dysample.pth", "tags": ["general","exhaustive"]},
+
+            { "name": "general-mprnet-deblur", "path": "swz30/MPRNet/model_deblurring.pth", "tags": ["general","exhaustive"]},
+            { "name": "general-mprnet-denoise", "path": "swz30/MPRNet/model_denoising.pth", "tags": ["general","exhaustive"]},
+            { "name": "general-restormer-motion-deblur", "path": "swz30/Restormer/motion_deblurring.pth", "tags": ["general","exhaustive"]},
+            { "name": "general-restormer-denoise", "path": "swz30/Restormer/real_denoising.pth", "tags": ["general","exhaustive"]},
+            { "name": "general-restormer-defocus-deblur", "path": "swz30/Restormer/single_image_defocus_deblurring.pth", "tags": ["general","exhaustive"]},
+
+            { "name": "general-moesr-upscale-x4", "path": "umzi2/MoESR/4x_DF2K_MoESR_500k.safetensors", "tags": ["general","exhaustive"]},
+            { "name": "general-mosr-upscale-x2", "path": "umzi2/MoSR/2x_nomos2_mosr.pth", "tags": ["general","exhaustive"]},
+            { "name": "general-mosr_t-upscale-x2", "path": "umzi2/MoSR/2x_nomos2_mosr_t.pth", "tags": ["general","exhaustive"]},
+
+            { "name": "general-hat-upscale-x2", "path": "XPixelGroup/HAT/HAT_SRx2.pth", "tags": ["general", "exhaustive"]},
+            { "name": "general-hat-sharper", "path": "XPixelGroup/HAT/Real_HAT_GAN_sharper.pth", "tags": ["general", "interesting"]},
+
+            { "name": "general-dat-upscale-x2", "path": "zhengchen1999/DAT/DAT_x2.pth", "tags": ["general","exhaustive"]},
+            { "name": "general-dat-2-upscale-x2", "path": "zhengchen1999/DAT/DAT_2_x2.pth", "tags": ["general","exhaustive"]}
+        ]
+    },
+    "images": [
+        {
+            "filename": "_5304001.jpg",
+            "options": {
+                "objectPosition": "30% 45%"
+            }
+        },
+        {
+            "filename": "_3140448.jpg",
+            "options": {
+                "objectPosition": "30% 50%"
+            }
+        },
+        {
+            "filename": "_2180803.jpg",
+            "options": {
+                "objectPosition": "52% 45%"
+            }
+        },
+        {
+            "filename": "_3024401.jpg",
+            "options": {
+                "objectPosition": "30% 50%"
+            }
+        },
+        {
+            "filename": "_5292477.jpg",
+            "options": {
+                "objectPosition": "52% 65%"
+            }
+        },
+        {
+            "filename": "_9162361.jpg",
+            "options": {
+                "objectPosition": "50% 45%"
+            }
+        },
+        {
+            "filename": "_7300284.jpg",
+            "options": {
+                "objectPosition": "50% 50%"
+            }
+        },
+        {
+            "filename": "_6222840-2.jpg",
+            "options": {
+                "objectPosition": "50% 50%"
+            }
+        },
+        {
+            "filename": "_7223611-2.jpg",
+            "options": {
+                "objectPosition": "30% 62%"
+            }
+        },
+        {
+            "filename": "_9211039.jpg",
+            "options": {
+                "objectPosition": "50% 30%"
+            }
+        }
+
+    ]
+}

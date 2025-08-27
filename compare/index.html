@@ -1,0 +1,250 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+        <script src="slide.js"></script>
+        <style>
+            * {
+                box-sizing: border-box;
+                font-family: sans-serif;
+                font-size: 18px;
+            }
+
+            html, body {
+                margin: 0;
+                padding: 0;
+            }
+
+            .img-comp-container {
+                position: relative;
+                display: inline-block;
+            }
+
+            .img-comp-overlay {
+                overflow: hidden;
+                position:absolute;
+            }
+
+            .img-comp-img img {
+                display: block;
+            }
+
+            .img-comp-slider {
+                position: absolute;
+                z-index: 9;
+                cursor: ew-resize;
+                width: 10px;
+                background-color: #2196F3;
+                opacity: 0.7;
+            }
+
+            .img-comp-img {
+                object-fit: none;
+                object-position: center;
+            }
+
+            .thumbnail {
+                flex-shrink: 0;
+                width: 160px;
+                height: 160px;
+                background-size: cover;
+                cursor: pointer;
+            }
+
+            #thumbnails {
+                overflow-x: scroll;
+                display: flex;
+                justify-content: space-around;
+                gap: 5px;
+                margin-top: 5px;
+            }
+
+            #container {
+                margin: auto;
+            }
+
+            #img-comp-text {
+                position:absolute;
+                bottom: 8px;
+                right: 8px;
+                color: white;
+            }
+
+            #img-comp-right-label {
+                position:absolute;
+                top: 8px;
+                right: 8px;
+                color: white;
+            }
+
+            #img-comp-left-label {
+                position:absolute;
+                top: 8px;
+                left: 8px;
+                color: white;
+            }
+
+            #sources {
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 5px;
+            }
+
+            select {
+                width: 98%;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+            }
+
+            .heading {
+                font-weight: bold;
+                margin-bottom: 4px;
+                background-color: #2196F3;
+                color: white;
+                padding: 1px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="container">
+            <div id="sources">
+                <div style="width:50%"><div class="heading">Left:</div> <select id="source-left"></select></div>
+                <div style="width:50%"><div class="heading">Right:</div> <select id="source-right"></select></div>
+            </div>
+            <div class="img-comp-container">
+                <div class="img-comp-overlay">
+                    <img id=img1 class="img-comp-img">
+                </div>
+                <div class="img-comp-base">
+                    <img id=img2 class="img-comp-img">
+                </div>
+                <div id="img-comp-text"></div>
+                <div id="img-comp-right-label"></div>
+                <div id="img-comp-left-label"></div>
+            </div>
+            <div id="thumbnails"></div>
+        </div>
+    </body>
+    <script>
+        const slider = new Slider(document.querySelector('.img-comp-container'));
+        let currentIndex = 0;
+        let meta = {}
+        let sources = []
+        let images= []
+        let tags = ['default']
+
+        function setSelectedImage(index) {
+            currentIndex = index;
+            const selectedSourceLeft = document.getElementById('source-left').value;
+            const selectedSourceRight = document.getElementById('source-right').value;
+
+            const selectedImage = images[index];
+            slider.setImageLeft(meta['basePath'] + selectedSourceLeft + "/" + images[index]['filename']);
+            slider.setImageRight(meta['basePath'] + selectedSourceRight + "/" + images[index]['filename']);
+
+            if (selectedImage.options && selectedImage.options.objectPosition) {
+                document.getElementById('img1').style.objectPosition = selectedImage.options.objectPosition;
+                document.getElementById('img2').style.objectPosition = selectedImage.options.objectPosition;
+            } else {
+                document.getElementById('img1').style.objectPosition = "50% 50%";
+                document.getElementById('img2').style.objectPosition = "50% 50%";
+            }
+            Array.from(document.getElementById('thumbnails').children).forEach(thumb => {
+                thumb.style.border = "";
+            });
+            document.getElementById(`thumb-${index}`).style.border = "5px solid #2196F3";
+        }
+
+        function onChangeSelection(e) {
+            setSelectedImage(currentIndex);
+        }
+
+        function adjustUnscaledWidth() {
+            const computedStyle = window.getComputedStyle(document.body);
+            let width = parseInt(computedStyle.getPropertyValue('width'));           
+            const rawheight = parseInt(computedStyle.getPropertyValue('height'));
+            const orientation = (width > rawheight) ? 'landscape' : 'portrait';
+            if (width > 1024) {
+                width = 1024;
+            }
+            let height = width;
+            if (orientation === 'landscape') {
+                height = Math.floor(width*0.75);
+                if (height > rawheight - 240) {
+                    height = rawheight - 240;
+                }
+            }           
+            document.getElementById("img-comp-text").innerHTML = `Scale 1:1 &mdash; ${width}x${height}`;            
+            document.getElementById('container').style.width = width;
+            document.getElementById('img1').style.width = width;
+            document.getElementById('img1').style.height = height;
+            document.getElementById('img2').style.width = width;
+            document.getElementById('img2').style.height = height;
+        }
+
+        function loadImages() {
+            fetch('images.json').then(response => response.json()).then(data => {
+                meta = data['meta'];
+                sources = meta['sources'].filter(source => tags.some(tag => source['tags'].includes(tag)));
+                images = data['images'];
+
+                document.getElementById('source-left').innerHTML = '';
+                document.getElementById('source-right').innerHTML = '';
+                sources.forEach(source => {
+                    const option1 = document.createElement('option');
+                    option1.value = source['path'];
+                    option1.text = source['name'];
+                    document.getElementById('source-left').appendChild(option1);
+
+                    const option2 = document.createElement('option');
+                    option2.value = source['path'];
+                    option2.text = source['name'];
+                    document.getElementById('source-right').appendChild(option2);
+                });
+
+                document.getElementById('source-left').selectedIndex = 0;
+                document.getElementById('source-right').selectedIndex = 1;
+
+                images.forEach((element, index) => {
+                    const thumb_div = document.createElement('div');
+                    thumb_div.className = 'thumbnail';
+                    thumb_div.id = `thumb-${index}`;
+                    thumb_div.style.backgroundImage = `url(${meta['basePath']}/original/${element.filename})`;
+                    thumb_div.addEventListener('click', () => {
+                        setSelectedImage(index);
+                    });
+                    document.getElementById('thumbnails').appendChild(thumb_div);
+                });
+
+                setSelectedImage(0);
+            });
+        }
+
+        function processParams() {
+            const params = window.location.hash.substring(1).split('&').reduce((acc, curr) => {
+                const [key, value] = curr.split('=');
+                acc[decodeURIComponent(key)] = decodeURIComponent(value);
+                return acc;
+            }, {});
+
+            if (params['tags']) {
+                tags = params['tags'].split(',');
+            }
+        }
+
+        processParams();
+        loadImages();
+
+        window.addEventListener("load", function() {
+            adjustUnscaledWidth();
+        });
+
+        document.getElementById('source-left').addEventListener('change', onChangeSelection);
+        document.getElementById('source-right').addEventListener('change', onChangeSelection);
+
+        window.addEventListener("hashchange", function() {
+            processParams();
+            loadImages();
+        });
+    </script>
+</html>
