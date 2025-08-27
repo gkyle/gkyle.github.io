@@ -205,6 +205,7 @@
                 document.getElementById('source-left').selectedIndex = 0;
                 document.getElementById('source-right').selectedIndex = 1;
 
+                document.getElementById('thumbnails').innerHTML = '';
                 images.forEach((element, index) => {
                     const thumb_div = document.createElement('div');
                     thumb_div.className = 'thumbnail';
